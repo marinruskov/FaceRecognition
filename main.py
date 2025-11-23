@@ -76,7 +76,7 @@ label.pack(pady=20)
 upload_button = ctk.CTkButton(app, text="Upload Image", command=upload_image)
 upload_button.pack(pady=10)
 
-webcam_button = ctk.CTkButton(app, text="Use Webcam", command=FaceRecognition.recognize_camera(app))
+webcam_button = ctk.CTkButton(app, text="Use Webcam", command=lambda: FaceRecognition.recognize_camera(app))
 webcam_button.pack(pady=10)
 
 app.mainloop()
