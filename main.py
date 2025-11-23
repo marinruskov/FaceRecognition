@@ -48,7 +48,7 @@ def display_image(image, detections, names, confidences):
     ctk_img = ctk.CTkImage(
         light_image=pil_img,
         dark_image=pil_img,
-        size=(550, 550)  # scale image inside CTk correctly
+        size=(450, 450)  # scale image inside CTk correctly
     )
 
     # Put image in label
