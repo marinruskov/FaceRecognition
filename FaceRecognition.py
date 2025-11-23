@@ -122,7 +122,7 @@ def recognize_camera(parent_window):
 
             label_id, confidence = recognizer.predict(face_roi)
 
-            if confidence > 80:
+            if confidence > 60:
                 name = "Unknown"
             else:
                 name = id_to_name.get(label_id, f"Person_{label_id}")
