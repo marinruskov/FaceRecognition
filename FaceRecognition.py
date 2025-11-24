@@ -7,11 +7,11 @@ from PIL import Image
 
 MODEL_PATH = "model.yml"
 LABELS_PATH = "labels.pkl"
-DATASET_DIR = "db1"
+DATASET_DIR = "DATASET"
 FACE_SIZE = (200, 200)
 CASCADE_PATH = cv2.data.haarcascades + "haarcascade_frontalface_default.xml"
 
-
+# Train LBPH model
 def train():
     recognizer = cv2.face.LBPHFaceRecognizer_create()
     face_cascade = cv2.CascadeClassifier(CASCADE_PATH)
@@ -19,7 +19,6 @@ def train():
     faces = []
     labels = []
 
-    # Example filename: 33_2.jpg → label = 2
     for filename in os.listdir(DATASET_DIR):
         if not filename.lower().endswith(".jpg"):
             continue
@@ -68,6 +67,7 @@ def train():
 
     print("Training complete. Samples:", len(faces))
 
+# Recognize from camera
 def recognize_camera(parent_window):
     # Load model
     recognizer = cv2.face.LBPHFaceRecognizer_create()
@@ -154,14 +154,7 @@ def recognize_camera(parent_window):
 
     update_frame()
 
-    def on_close():
-        cap.release()
-        win.destroy()
-
-    win.protocol("WM_DELETE_WINDOW", on_close)
-
-
-
+# Recognize from image file
 def recognize_image(image_path):
     # Load model
     recognizer = cv2.face.LBPHFaceRecognizer_create()
@@ -225,10 +218,10 @@ def recognize_image(image_path):
         "detections": faces.tolist()
     }
 
+# Test functions
 if __name__ == "__main__":
-    print("Choose what you want to do:")
     print("1 - Train")
-    print("2 - Recognize")
+    print("2 - Recognize Camera")
     print("3 - Recognize from Image")
 
     option = input("Enter option: ")

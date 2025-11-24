@@ -1,6 +1,6 @@
 import customtkinter as ctk
 from tkinter import filedialog
-from PIL import Image, ImageTk
+from PIL import Image
 import FaceRecognition
 import cv2
 
@@ -44,16 +44,16 @@ def display_image(image, detections, names, confidences):
     # Convert to PIL image
     pil_img = Image.fromarray(img_rgb)
 
-    # Create CTkImage (this auto-scales correctly on high DPI)
+    # Create CTkImage
     ctk_img = ctk.CTkImage(
         light_image=pil_img,
         dark_image=pil_img,
-        size=(450, 450)  # scale image inside CTk correctly
+        size=(450, 450)
     )
 
     # Put image in label
     lbl = ctk.CTkLabel(win, image=ctk_img, text="")
-    lbl.image = ctk_img  # prevent garbage collection
+    lbl.image = ctk_img
     lbl.pack(pady=10)
 
 
