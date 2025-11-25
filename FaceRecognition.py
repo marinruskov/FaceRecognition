@@ -10,7 +10,7 @@ LABELS_PATH = "labels.pkl"
 DATASET_DIR = "DATASET"
 FACE_SIZE = (200, 200)
 CASCADE_PATH = cv2.data.haarcascades + "haarcascade_frontalface_default.xml"
-confidence_threshold = 80
+confidence_threshold = 60
 
 # Train LBPH model
 def train():
@@ -130,9 +130,13 @@ def recognize_camera(parent_window):
 
             face_infos.append((name, confidence))
 
+
+            confidence_percent = (100 - (confidence / confidence_threshold) * 100),
+            confidence_percent = max(0, min((int)confidence_percent, 100))
+
             # Draw rectangle + label
             cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 255), 2)
-            cv2.putText(frame, f"{name} ({int(confidence)})", (x, y - 10),
+            cv2.putText(frame, f"{name} ({int(confidence_percent)})", (x, y - 10),
                         cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 255), 2)
 
         # Convert to CTkImage
@@ -148,7 +152,11 @@ def recognize_camera(parent_window):
         for widget in info_frame.winfo_children():
             widget.destroy()
         for i, (name, conf) in enumerate(face_infos):
-            lbl = ctk.CTkLabel(info_frame, text=f"Face {i+1}: {name} (Confidence: {(100 - (conf / 80) * 100)}%")
+            #Transform to percent
+            confidence_percent = (100 - (conf / confidence_threshold) * 100),
+            confidence_percent = max(0, min(confidence_percent, 100))
+
+            lbl = ctk.CTkLabel(info_frame, text=f"Face {i+1}: {name} (Confidence: {confidence_percent}%")
             lbl.pack()
 
         win.after(10, update_frame)
@@ -207,9 +215,12 @@ def recognize_image(image_path):
         else:
             name = id_to_name.get(label_id, f"Person_{label_id}")
 
+        #TRansform to percent
+        confidence_percent = (100 - (confidence / confidence_threshold) * 100),
+        confidence_percent = max(0, min(confidence_percent, 100))
         results.append({
             "name": name,
-            "confidence": (100 - (confidence / 80) * 100),
+            "confidence": confidence_percent,
             "box": [int(x), int(y), int(w), int(h)]
         })
 
