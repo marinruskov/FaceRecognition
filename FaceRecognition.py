@@ -10,7 +10,7 @@ LABELS_PATH = "labels.pkl"
 DATASET_DIR = "DATASET"
 FACE_SIZE = (200, 200)
 CASCADE_PATH = cv2.data.haarcascades + "haarcascade_frontalface_default.xml"
-confidence_threshold = 60
+confidence_threshold = 50
 
 # Train LBPH model
 def train():
