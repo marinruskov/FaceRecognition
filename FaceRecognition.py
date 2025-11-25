@@ -10,6 +10,7 @@ LABELS_PATH = "labels.pkl"
 DATASET_DIR = "DATASET"
 FACE_SIZE = (200, 200)
 CASCADE_PATH = cv2.data.haarcascades + "haarcascade_frontalface_default.xml"
+confidence_threshold = 80
 
 # Train LBPH model
 def train():
@@ -122,7 +123,7 @@ def recognize_camera(parent_window):
 
             label_id, confidence = recognizer.predict(face_roi)
 
-            if confidence > 60:
+            if confidence > confidence_threshold:
                 name = "Unknown"
             else:
                 name = id_to_name.get(label_id, f"Person_{label_id}")
@@ -147,7 +148,7 @@ def recognize_camera(parent_window):
         for widget in info_frame.winfo_children():
             widget.destroy()
         for i, (name, conf) in enumerate(face_infos):
-            lbl = ctk.CTkLabel(info_frame, text=f"Face {i+1}: {name} (Confidence: {conf:.2f})")
+            lbl = ctk.CTkLabel(info_frame, text=f"Face {i+1}: {name} (Confidence: {(100 - (conf / 80) * 100)}%")
             lbl.pack()
 
         win.after(10, update_frame)
@@ -201,14 +202,14 @@ def recognize_image(image_path):
         label_id, confidence = recognizer.predict(face_roi)
         print(label_id, confidence)
 
-        if confidence > 80:
+        if confidence > confidence_threshold:
             name = "Unknown"
         else:
             name = id_to_name.get(label_id, f"Person_{label_id}")
 
         results.append({
             "name": name,
-            "confidence": confidence,
+            "confidence": (100 - (confidence / 80) * 100),
             "box": [int(x), int(y), int(w), int(h)]
         })
 

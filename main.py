@@ -60,7 +60,7 @@ def display_image(image, detections, names, confidences):
     ctk_label = ctk.CTkLabel(win, text="Detected Face:")
     ctk_label.pack(pady=5)
     for i, (name, conf) in enumerate(zip(names, confidences)):
-        face_info = f"Face {i + 1}: {name} (Confidence: {conf:.2f})"
+        face_info = f"Face {i + 1}: {name} (Confidence: {conf:}%)"
         face_label = ctk.CTkLabel(win, text=face_info)
         face_label.pack()
 
