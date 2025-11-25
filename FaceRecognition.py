@@ -153,7 +153,7 @@ def recognize_camera(parent_window):
             widget.destroy()
         for i, (name, conf) in enumerate(face_infos):
             #Transform to percent
-            confidence_percent = (100 - (conf / confidence_threshold) * 100),
+            confidence_percent = 100 - (conf / confidence_threshold) * 100
             confidence_percent = max(0, min(confidence_percent, 100))
 
             lbl = ctk.CTkLabel(info_frame, text=f"Face {i+1}: {name} (Confidence: {confidence_percent}%")
