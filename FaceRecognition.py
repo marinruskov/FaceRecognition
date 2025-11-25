@@ -131,8 +131,8 @@ def recognize_camera(parent_window):
             face_infos.append((name, confidence))
 
 
-            confidence_percent = (100 - (confidence / confidence_threshold) * 100),
-            confidence_percent = max(0, min((int)confidence_percent, 100))
+            confidence_percent = (100 - (confidence / confidence_threshold) * 100)
+            confidence_percent = max(0, min(confidence_percent, 100))
 
             # Draw rectangle + label
             cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 255), 2)
