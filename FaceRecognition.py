@@ -99,6 +99,9 @@ def recognize_camera(parent_window):
     win.title("Live Face Recognition")
     win.geometry("800x600")
 
+    video_label = ctk.CTkLabel(win, text="")
+    video_label.pack(pady=10)
+
     def update_frame():
         ret, frame = cap.read()
         if not ret:
