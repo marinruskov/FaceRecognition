@@ -10,7 +10,7 @@ LABELS_PATH = "labels.pkl"
 DATASET_DIR = "DATASET"
 FACE_SIZE = (200, 200)
 CASCADE_PATH = cv2.data.haarcascades + "haarcascade_frontalface_default.xml"
-confidence_threshold = 50
+confidence_threshold = 70
 
 # Train LBPH model
 def train():
@@ -99,9 +99,6 @@ def recognize_camera(parent_window):
     win.title("Live Face Recognition")
     win.geometry("800x600")
 
-    video_label = ctk.CTkLabel(win, text="")
-    video_label.pack(pady=10)
-
     def update_frame():
         ret, frame = cap.read()
         if not ret:
@@ -144,17 +141,6 @@ def recognize_camera(parent_window):
         tk_img = ctk.CTkImage(light_image=pil_img, dark_image=pil_img, size=(760, 540))
         video_label.configure(image=tk_img)
         video_label.image = tk_img
-
-        # Update face info labels
-        # for widget in info_frame.winfo_children():
-        #     widget.destroy()
-        # for i, (name, conf) in enumerate(face_infos):
-        #     #Transform to percent
-        #     confidence_percent = 100 - (conf / confidence_threshold) * 100
-        #     confidence_percent = max(0, min(confidence_percent, 100))
-        #
-        #     lbl = ctk.CTkLabel(info_frame, text=f"Face {i+1}: {name} (Confidence: {confidence_percent}%")
-        #     lbl.pack()
 
         win.after(10, update_frame)
 
