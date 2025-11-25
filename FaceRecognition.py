@@ -90,7 +90,7 @@ def recognize_camera(parent_window):
 
     # Start webcam
     cap = cv2.VideoCapture(0)
-    if not cap.isOpened():
+    if not cap.isOpened() and not cap.read()[0]:
         print("Error: Could not open webcam.")
         return
 
